@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "name": "Alex",
+            "email": "alex@gmail.com",
+            "projects": [
+                {
+                    "title": "CLI Tool",
+                    "description": "Python CLI project",
+                    "due_date": "2026-08-01",
+                    "tasks": [
+                        {
+                            "title": "Implement add-task",
+                            "status": "Pending",
+                            "assigned_to": "Alex"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
