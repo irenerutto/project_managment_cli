@@ -11,6 +11,11 @@
                     "tasks": [
                         {
                             "title": "Implement add-task",
+                            "status": "Completed",
+                            "assigned_to": "Alex"
+                        },
+                        {
+                            "title": "Implement add-task",
                             "status": "Pending",
                             "assigned_to": "Alex"
                         }

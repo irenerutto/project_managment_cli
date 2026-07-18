@@ -1,0 +1,221 @@
+# Project Management CLI Tool
+
+## Overview
+
+This is a Python Command-Line Interface (CLI) application that allows administrators to manage users, projects, and tasks. The application stores data locally using JSON files and demonstrates Object-Oriented Programming (OOP), file handling, and command-line argument parsing.
+
+---
+
+## Features
+
+- Add new users
+- View all users
+- Add projects to users
+- View projects for a specific user
+- Add tasks to projects
+- Mark tasks as completed
+- Save and load data using JSON
+- Display users and projects using Rich tables
+- Unit tests using pytest
+
+---
+
+## Project Structure
+
+```
+project-management-cli/
+│
+├── data/
+│   └── data.json
+│
+├── models/
+│   ├── person.py
+│   ├── user.py
+│   ├── project.py
+│   ├── task.py
+│   └── __init__.py
+│
+├── tests/
+│   ├── test_person.py
+│   ├── test_user.py
+│   ├── test_project.py
+│   └── test_task.py
+│
+├── utils/
+│   ├── storage.py
+│   ├── helpers.py
+│   └── __init__.py
+│
+├── main.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Technologies Used
+
+- Python 3
+- argparse
+- JSON
+- Rich
+- pytest
+
+---
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+### 2. Navigate to the project folder
+
+```bash
+cd project-management-cli
+```
+
+### 3. Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+### 4. Activate the virtual environment
+
+Linux / macOS
+
+```bash
+source .venv/bin/activate
+```
+
+Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+### 5. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Running the Application
+
+### Add a User
+
+```bash
+python main.py add-user --name "Alex" --email "alex@gmail.com"
+```
+
+### List Users
+
+```bash
+python main.py list-users
+```
+
+### Add a Project
+
+```bash
+python main.py add-project --user "Alex" --title "CLI Tool" --description "Python CLI project" --due-date "2026-08-01"
+```
+
+### List Projects
+
+```bash
+python main.py list-projects --user "Alex"
+```
+
+### Add a Task
+
+```bash
+python main.py add-task --user "Alex" --project "CLI Tool" --title "Implement add-task" --assigned-to "Alex"
+```
+
+### Complete a Task
+
+```bash
+python main.py complete-task --user "Alex" --project "CLI Tool" --title "Implement add-task"
+```
+
+---
+
+## Running Tests
+
+Run all tests with:
+
+```bash
+python -m pytest
+```
+
+Run a single test file:
+
+```bash
+python -m pytest tests/test_person.py
+```
+
+---
+
+## Object-Oriented Design
+
+The project uses four classes:
+
+- **Person** – Base class containing shared user information.
+- **User** – Inherits from Person and manages projects.
+- **Project** – Stores project details and tasks.
+- **Task** – Represents work assigned to a user.
+
+Relationships:
+
+- One User can have many Projects.
+- One Project can have many Tasks.
+
+---
+
+## Data Persistence
+
+The application stores all information in:
+
+```
+data/data.json
+```
+
+The JSON file is automatically updated whenever users, projects, or tasks are added or modified.
+
+---
+
+## Known Limitations
+
+- Data is stored locally and not in a database.
+- Projects with the same name are not prevented.
+- Users with duplicate names or emails can be added.
+- Tasks cannot currently be deleted or edited.
+
+---
+
+## Future Improvements
+
+- Delete users, projects, and tasks.
+- Edit existing records.
+- Search for tasks.
+- Filter completed tasks.
+- Add due dates for tasks.
+- Improve error handling.
+- Store data in a database.
+
+---
+
+## Author
+
+Irene
+
+---
+
+## License
+
+This project was created for educational purposes.

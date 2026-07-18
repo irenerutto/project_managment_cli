@@ -1,6 +1,11 @@
 import argparse
 
+from rich.console import Console
+from rich.table import Table
+
 from utils.storage import load_data, save_data
+
+console = Console()
 
 # Create the main argument parser
 parser = argparse.ArgumentParser(
@@ -55,6 +60,16 @@ add_task.add_argument("--project", required=True)
 add_task.add_argument("--title", required=True)
 add_task.add_argument("--assigned-to", required=True)
 
+# Complete task command
+complete_task = subparsers.add_parser(
+    "complete-task",
+    help="Mark a task as completed"
+)
+
+complete_task.add_argument("--user", required=True)
+complete_task.add_argument("--project", required=True)
+complete_task.add_argument("--title", required=True)
+
 # Read the command entered by the user
 args = parser.parse_args()
 
@@ -79,12 +94,22 @@ elif args.command == "list-users":
     data = load_data()
 
     if not data["users"]:
-        print("No users found.")
+        console.print("[red]No users found.[/red]")
+
     else:
+
+        table = Table(title="Users")
+
+        table.add_column("Name", style="cyan")
+        table.add_column("Email", style="green")
+
         for user in data["users"]:
-            print(f"Name: {user['name']}")
-            print(f"Email: {user['email']}")
-            print("-" * 30)
+            table.add_row(
+                user["name"],
+                user["email"]
+            )
+
+        console.print(table)
 
 # Handle add-project
 elif args.command == "add-project":
@@ -121,21 +146,32 @@ elif args.command == "list-projects":
         if user["name"] == args.user:
 
             if not user["projects"]:
-                print("No projects found.")
+                console.print("[red]No projects found.[/red]")
 
             else:
+
+                table = Table(title=f"{user['name']}'s Projects")
+
+                table.add_column("Title", style="cyan")
+                table.add_column("Description", style="green")
+                table.add_column("Due Date", style="yellow")
+
                 for project in user["projects"]:
-                    print(f"Title: {project['title']}")
-                    print(f"Description: {project['description']}")
-                    print(f"Due Date: {project['due_date']}")
-                    print("-" * 30)
+
+                    table.add_row(
+                        project["title"],
+                        project["description"],
+                        project["due_date"]
+                    )
+
+                console.print(table)
 
             break
 
     else:
-        print("User not found.")
-
-# Handle add-task
+        console.print("[red]User not found.[/red]") 
+        
+ # Handle add-task
 elif args.command == "add-task":
 
     data = load_data()
@@ -157,6 +193,44 @@ elif args.command == "add-task":
                     save_data(data)
 
                     print("Task added successfully!")
+
+                    break
+
+            else:
+                print("Project not found.")
+
+            break
+
+    else:
+        print("User not found.")
+
+# Handle complete-task
+elif args.command == "complete-task":
+
+    data = load_data()
+
+    for user in data["users"]:
+
+        if user["name"] == args.user:
+
+            for project in user["projects"]:
+
+                if project["title"] == args.project:
+
+                    for task in project["tasks"]:
+
+                        if task["title"] == args.title:
+
+                            task["status"] = "Completed"
+
+                            save_data(data)
+
+                            print("Task marked as completed!")
+
+                            break
+
+                    else:
+                        print("Task not found.")
 
                     break
 
